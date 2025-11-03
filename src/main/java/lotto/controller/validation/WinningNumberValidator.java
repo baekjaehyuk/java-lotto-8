@@ -3,7 +3,6 @@ package lotto.controller.validation;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lotto.util.ErrorMessages;
 import lotto.util.LottoConstants;
