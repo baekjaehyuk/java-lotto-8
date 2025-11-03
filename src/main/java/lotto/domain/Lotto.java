@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import lotto.util.ErrorMessages;
+import lotto.util.LottoConstants;
 
 public class Lotto {
 
@@ -27,7 +28,7 @@ public class Lotto {
     }
 
     private void validateLottoNumberRange(List<Integer> numbers) {
-        if (numbers.stream().anyMatch(num -> num < 1 || num > 45)) {
+        if (numbers.stream().anyMatch(num -> num < LottoConstants.MIN_LOTTO_NUMBER || num > LottoConstants.MAX_LOTTO_NUMBER)) {
             throw new IllegalArgumentException(ErrorMessages.INVALID_LOTTO_NUMBER_RANGE.getMessage());
         }
     }

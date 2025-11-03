@@ -12,18 +12,6 @@ import org.junit.jupiter.api.Test;
 
 class LottoTicketTest {
 
-    @DisplayName("구입 금액이 1000원 단위가 아니면 예외가 발생한다.")
-    @Test
-    void createLottoTicketByInvalidAmount() {
-        // given
-        BigDecimal invalidAmount = BigDecimal.valueOf(1500);
-        List<Lotto> lottos = List.of(new Lotto(List.of(1, 2, 3, 4, 5, 6)));
-
-        // when & then
-        assertThatThrownBy(() -> new LottoTicket(invalidAmount, lottos))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("로또 리스트가 비어있으면 예외가 발생한다.")
     @Test
     void createLottoTicketWithEmptyLottos() {

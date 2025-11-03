@@ -38,19 +38,52 @@ public class LottoController {
 
     public void run() {
         try {
-            BigDecimal amount = amountValidator.validate(inputView.inputPurchaseAmount());
+            BigDecimal amount = getValidAmount();
 
             LottoTicket lottoTicket = lottoService.purchase(amount);
             outputView.printLottoTickets(lottoTicket);
 
-            List<Integer> winningNumbers = winningNumberValidator.validate(inputView.inputWinningNumbers());
-            int bonusNumber = bonusNumberValidator.validate(inputView.inputBonusNumber());
+            List<Integer> winningNumbers = getValidWinningNumbers();
+            int bonusNumber = getValidBonusNumber(winningNumbers);
 
             LottoResult lottoResult = lottoService.matchLottoNumber(lottoTicket, winningNumbers, bonusNumber);
             BigDecimal incomeRate = lottoService.checkIncomeRate(lottoResult, amount);
             outputView.printWinningStatistics(lottoResult, incomeRate);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
+        }
+    }
+
+    private BigDecimal getValidAmount() {
+        while (true) {
+            try {
+                String amountInput = inputView.inputPurchaseAmount();
+                return amountValidator.validate(amountInput);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private List<Integer> getValidWinningNumbers() {
+        while (true) {
+            try {
+                String winningNumbersInput = inputView.inputWinningNumbers();
+                return winningNumberValidator.validate(winningNumbersInput);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private int getValidBonusNumber(List<Integer> winningNumbers) {
+        while (true) {
+            try {
+                String bonusNumberInput = inputView.inputBonusNumber();
+                return bonusNumberValidator.validate(bonusNumberInput, winningNumbers);
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
         }
     }
 }
